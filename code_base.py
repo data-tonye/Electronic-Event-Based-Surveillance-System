@@ -103,7 +103,7 @@ class event_based:
     df['date'] = df['date'].apply(lambda x :dateparser.parse(x).strftime("%d %B %Y"))
 
     ## formats the links in the results
-    df['link'] = df['link'].apply(lambda x :urllib.parse.quote_plus(x, safe='/:?=&'))
+    df['link'] = df['link'].apply(lambda x :urllib.parse.quote_plus(x, safe='<a href="{}">{}</a>'))
 
     ## saves a copy of the dataframe values and saves it in a databases
     ## and appends with dataframes from new searches
@@ -197,6 +197,6 @@ class event_based:
       alt.Color('disease'))
   
     bar_plot = gp_chart.display()
-      
+    
     return bar_plot
     pass
