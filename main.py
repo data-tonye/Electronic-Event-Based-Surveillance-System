@@ -1,7 +1,6 @@
 ## import libraries
 import streamlit as st
 from code_base import *
-from search_history import *
 import sqlite3
 
 
