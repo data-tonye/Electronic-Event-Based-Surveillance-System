@@ -202,7 +202,7 @@ class event_based:
     gp_chart = alt.Chart(search_df).mark_line().encode(
       alt.X('time', title = 'Date'),
       alt.Y('count:Q', title = 'Disease count'), 
-      alt.Color('disease:N')).properties(width=900,height=750)
+      alt.Color('disease:N')).properties(width=1000,height=600)
   
     
     return gp_chart
