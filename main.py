@@ -6,11 +6,6 @@ import sqlite3
 
 
 
-## saves results from the create_dateframe function
-
-## saves dataframe table as search_df
-#search_df = save_search()
-
 
 st.set_page_config(
      page_title="EBS App",
@@ -19,15 +14,30 @@ st.set_page_config(
       )
 
 st.title(
-  'An Electronic Event Based Surveillance System'
+  'An Electronic Event Based Surveillance System (eEBS)'
 )
 
 st.markdown(
-  'This project is aimed at demonstrating how health surveillance officers at different levels can monitor online news or events to anticipate a potential health threat'
-  )
+  'This project is aimed at demonstrating how health surveillance officers at different levels can monitor online news or events to anticipate a potential health threat.')
+  
+st.markdown(
+  'According to the World Health Organization (WHO), Event-based surveillance is the organized colection, monitoring, assessment and interpretation of unstructured ad hoc information regard health events or risk,which may represent an acute risk to health.'
+)
+    
+st.markdown(
+  'popular examples of a electronic event based surveillance system are [HealthMap](https://healthmap.org/) and Tatafo (used by Nigeria Centre for Disease Control (NCDC)).'
+)
 
+st.markdown(
+  'This is a prototype emualating some core features of an electronic event based surveillance system.'
+)
+
+  
+## divides the display area into two
 col1, col2 = st.columns([1, 3])
 
+
+## creates search boxes
 with col1:
   form = st.form(key='search_disease')
   search_term = form.text_input(label='Enter disease search term')
@@ -38,28 +48,46 @@ with col1:
   history_button = form.form_submit_button(label='Search History')
 
 
-eb = event_based()
-eb.change_params(search_term)
-result = eb.search_google()
-ds = eb.create_dateframe(result)
-search_plot=eb.save_search(ds)
-plot = eb.plot_searches(search_plot)
-plot
 
 
-if search_button:
-  with col2:
-    st.dataframe(ds)
+try:
+  ## initializes the class
+  eb = event_based() 
+
+  ## replaces search query
+  eb.change_params(search_term)
+
+  ## searches for the term and saves the dictionary input
+  result = eb.search_google()
+
+  ## converts the 'news result' dictionary into 
+  ds = eb.create_dateframe(result['news_results'])
+
+  #saves search details and plots a line chart of the details
+  search_plot=eb.save_search(ds)
+  plot = eb.plot_searches(search_plot)
+  plot
   
-elif history_button:
-  connection = sqlite3.connect('search_database.db') 
-  cursor = connection.cursor()
-  table = cursor.execute('SELECT * FROM search_history WHERE snippet LIKE ? OR date LIKE ?', (f'%{history_term}%', f'%{history_term}%'))
-  cols = ['index', 'position', 'date', 'title', 'source', 'link', 'snippet']
-  table_results = pd.DataFrame(table, columns= cols)
-  with col2:
-    table_results
+  ## if search button is clicked it displays search dataframe'''
+  if search_button:
+    with col2:
+      #result['news_results']
+      st.dataframe(ds)
 
-  st.write("Results not found")
-else:
+  ## if the history button is clicked it displays data from available database
+  elif history_button:
+      connection = sqlite3.connect('search_database.db') 
+      cursor = connection.cursor()
+      table = cursor.execute('SELECT * FROM search_history WHERE snippet LIKE ? OR date LIKE ?', (f'%{history_term}%', f'%{history_term}%'))
+      cols = ['index', 'position', 'date', 'title', 'source', 'link', 'snippet']
+      table_results = pd.DataFrame(table, columns= cols)
+      with col2:
+        table_results
+
+  else:
+    pass
+except AttributeError:
+  print('Results unavailabe')
+except UnboundLocalError:
+  print('Results unavailabe')
   pass

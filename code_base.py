@@ -55,9 +55,9 @@ class event_based:
     results = search.get_dict()
 
     ## streamlines the results to news results only
-    news_results = results['news_results'] 
+    #news_results = results['news_results'] 
 
-    return news_results
+    return results
     pass
 
 
@@ -102,8 +102,16 @@ class event_based:
     ## changes 'x ago' values to standard time values
     df['date'] = df['date'].apply(lambda x :dateparser.parse(x).strftime("%d %B %Y"))
 
-    ## formats the links in the results
-    df['link'] = df['link'].apply(lambda x :urllib.parse.quote_plus(x, safe='<a href="{}">{}</a>'))
+    def make_clickable(val):
+      '''
+      INPUT: values from column
+      OUTPUT: values with clickable links
+      '''
+      # target _blank to open new window
+      return '<a target="_blank" href="{}">{}</a>'.format(val,val)
+
+    df.style.format({'link': make_clickable})
+    
 
     ## saves a copy of the dataframe values and saves it in a databases
     ## and appends with dataframes from new searches
@@ -191,12 +199,11 @@ class event_based:
     ## saves the search dataframe and plots a line chart
 
 
-    gp_chart = alt.Chart(search_df).mark_bar().encode(
-      alt.X('time'),
-      alt.Y('count', axis=alt.Axis(grid=False)), 
-      alt.Color('disease'))
+    gp_chart = alt.Chart(search_df).mark_line().encode(
+      alt.X('time', title = 'Date'),
+      alt.Y('count:Q', title = 'Disease count'), 
+      alt.Color('disease:N')).properties(width=500,height=250)
   
-    bar_plot = gp_chart.display()
     
-    return bar_plot
+    return gp_chart
     pass
