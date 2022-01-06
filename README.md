@@ -25,8 +25,7 @@ data :  search_database.db and plot.db are used to save search history of news s
 - dateparser
 - urllib
 - streamlit
-
-import altair as alt
+- altair
 
 ## Instructions:
 
