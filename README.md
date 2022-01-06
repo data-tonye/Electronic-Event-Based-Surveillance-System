@@ -16,7 +16,19 @@ code_base.py : Contains the main code for most of the fuctions for the web app.
 
 data :  search_database.db and plot.db are used to save search history of news searches and meta data on searches.
 
-Instructions:
+## Libraries used
+- GoogleSearch
+- pandas
+- more_itertools
+- datetime
+- sqlite3
+- dateparser
+- urllib
+- streamlit
+
+import altair as alt
+
+## Instructions:
 
 - clone the repo 
 - run the main.py file on your IDE environment: "streamlit run main.py"
