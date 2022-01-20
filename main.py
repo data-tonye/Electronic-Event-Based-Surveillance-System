@@ -88,6 +88,7 @@ try:
     pass
 except AttributeError:
   print('Results unavailabe')
+except KeyError:
 except UnboundLocalError:
   print('Results unavailabe')
   pass
