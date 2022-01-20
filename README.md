@@ -9,7 +9,7 @@ popular examples of a electronic event based surveillance system are [HealthMap]
 
 This is a prototype emualating some core features of an electronic event based surveillance system.
 
-Folders and Files used:
+## Folders and Files used:
 main.py : Contains the executable Streamlit code
 
 code_base.py : Contains the main code for most of the fuctions for the web app.
