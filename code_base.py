@@ -201,7 +201,7 @@ class event_based:
 
     gp_chart = alt.Chart(search_df).mark_line().encode(
       alt.X('time', title = 'Date'),
-      alt.Y('count:Q', title = 'Disease count'), 
+      alt.Y('count:Q', title = 'News alert count'), 
       alt.Color('disease:N')).properties(width=1200,height=500, title = 'A plot showing daily alerts')
   
     
