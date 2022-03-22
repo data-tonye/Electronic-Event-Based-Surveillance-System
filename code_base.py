@@ -184,28 +184,3 @@ class event_based:
     return search_table
     pass
 
-  def plot_searches(self, search_df):
-    '''
-    plots the search results over time
-
-    INPUT: search data
-
-    OUTPUT: plots a line chart of count of
-            disease search results over time
-    '''
-
-    ## converts the time column into datetime format
-
-    ## saves the search dataframe and plots a line chart
-    connection = sqlite3.connect('plot.db', detect_types=sqlite3.PARSE_DECLTYPES | 
-                                 sqlite3.PARSE_COLNAMES)
-    
-    searches_df = pd.read_sql_table('plot_table', connection)
-    gp_chart = alt.Chart(searches_df).mark_line().encode(
-    alt.X('time', title = 'Date'),
-    alt.Y('count:Q', title = 'News alert count'), 
-    alt.Color('disease:N')).properties(width=1200,height=500, title = 'A plot showing daily alerts')
-  
-    
-    return gp_chart
-    pass
