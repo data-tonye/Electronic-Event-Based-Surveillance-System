@@ -65,6 +65,14 @@ try:
   #saves search details and plots a line chart of the details
   search_plot=eb.save_search(ds)
   
+  connection = sqlite3.connect('plot.db', detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+  searches_df = pd.read_sql_query("SELECT * FROM plot_table", connection)
+     
+  gp_chart = alt.Chart(searches_df).mark_line().encode(
+       alt.X('time', title = 'Date'),
+       alt.Y('count:Q', title = 'News alert count'), 
+       alt.Color('disease:N')).properties(width=1200,height=500, title = 'A plot showing daily alerts')
+  
   ## if search button is clicked it displays search dataframe'''
   if search_button:
     with col2:
@@ -92,10 +100,4 @@ except UnboundLocalError:
      pass
 
 
-connection = sqlite3.connect('plot.db', detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
-searches_df = pd.read_sql_query("SELECT * FROM plot_table", connection)
-     
-gp_chart = alt.Chart(searches_df).mark_line().encode(
-     alt.X('time', title = 'Date'),
-     alt.Y('count:Q', title = 'News alert count'), 
-     alt.Color('disease:N')).properties(width=1200,height=500, title = 'A plot showing daily alerts')
+
