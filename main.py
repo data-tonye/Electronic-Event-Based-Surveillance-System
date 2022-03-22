@@ -93,7 +93,7 @@ except UnboundLocalError:
 
 
 connection = sqlite3.connect('plot.db', detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
-searches_df = pd.read_sql_table('plot_table', connection)
+searches_df = pd.read_sql_query("SELECT * FROM plot_table", connection)
      
 gp_chart = alt.Chart(searches_df).mark_line().encode(
      alt.X('time', title = 'Date'),
