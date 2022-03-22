@@ -197,12 +197,14 @@ class event_based:
     ## converts the time column into datetime format
 
     ## saves the search dataframe and plots a line chart
-
-
-    gp_chart = alt.Chart(search_df).mark_line().encode(
-      alt.X('time', title = 'Date'),
-      alt.Y('count:Q', title = 'News alert count'), 
-      alt.Color('disease:N')).properties(width=1200,height=500, title = 'A plot showing daily alerts')
+    connection = sqlite3.connect('plot.db', detect_types=sqlite3.PARSE_DECLTYPES | 
+                                 sqlite3.PARSE_COLNAMES)
+    
+    searches_df = pd.read_sql_table('plot_table', connection)
+    gp_chart = alt.Chart(searches_df).mark_line().encode(
+    alt.X('time', title = 'Date'),
+    alt.Y('count:Q', title = 'News alert count'), 
+    alt.Color('disease:N')).properties(width=1200,height=500, title = 'A plot showing daily alerts')
   
     
     return gp_chart
