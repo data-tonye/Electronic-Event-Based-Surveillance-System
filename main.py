@@ -73,7 +73,7 @@ try:
        alt.Y('count:Q', title = 'News alert count'), 
        alt.Color('disease:N')).properties(width=1200,height=500, title = 'A plot showing daily alerts')
   
-   gp_chart
+  gp_chart
      
   ## if search button is clicked it displays search dataframe'''
   if search_button:
