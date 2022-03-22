@@ -26,7 +26,7 @@ class event_based:
           "tbs": f"cdr:1,cd_min:{month}/{from_day}/{year},cd_max:{month}/{to_day}/{year}",
           "num": 1000,
           "location": "Nigeria",
-          "api_key": "abb004e760c772655be12e1183199ecd8fe41ec4b62112be17772fb1be6c8598"
+          "api_key": "4f37972118d2f8418ba9b3e5f6386b19b50df2bb83ed1abc809f02874e139596"
           }
     
     self.params = params
